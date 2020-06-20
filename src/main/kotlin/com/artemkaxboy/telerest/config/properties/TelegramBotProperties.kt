@@ -1,4 +1,4 @@
-package com.artemkaxboy.telerest.telegram
+package com.artemkaxboy.telerest.config.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.validation.annotation.Validated

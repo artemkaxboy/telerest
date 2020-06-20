@@ -1,16 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    kotlin("jvm") version "1.3.72"
+    kotlin("plugin.spring") version "1.3.72"
     id("org.springframework.boot") version "2.3.1.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    kotlin("jvm") version "1.3.72"
-    // kotlin("kapt") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
 }
 
-// val springfoxSwaggerVersion by extra("2.7.0")
-// val springfoxSpringWebflux by extra("pom")
-val kotlinLogging by extra("1.7.10")
+val kotlinLoggingVersion by extra("1.7.10")
+val ktTelegramBotVersion by extra("1.3.0-beta")
+val springfoxSwaggerVersion by extra("3.0.0-SNAPSHOT")
 
 group = "com.artemkaxboy"
 version = "0.0.1-SNAPSHOT"
@@ -18,9 +17,10 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
-    jcenter()
     // telegram bot   https://github.com/elbekD/kt-telegram-bot
     maven("https://jitpack.io")
+    // to use swagger with flux we need 3.0.0-SNAPSHOT version
+    maven("http://oss.jfrog.org/artifactory/oss-snapshot-local/")
 }
 
 dependencies {
@@ -37,19 +37,19 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     // swagger
-    // implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
-    // implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
-    // implementation("io.springfox:springfox-spring-webflux:$springfoxSpringWebflux")
+    implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
+    implementation("io.springfox:springfox-spring-webflux:$springfoxSwaggerVersion")
+    implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
 
     // logging
-    implementation("io.github.microutils:kotlin-logging:$kotlinLogging")
+    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
 
     // validation       https://www.baeldung.com/javax-validation
     implementation("javax.validation:validation-api")
     implementation("org.hibernate.validator:hibernate-validator")
 
     // telegram bot   https://github.com/elbekD/kt-telegram-bot
-    implementation("com.github.elbekD:kt-telegram-bot:1.3.0-beta") {
+    implementation("com.github.elbekD:kt-telegram-bot:$ktTelegramBotVersion") {
         // it's conflicting with netty, and we don't need webhook mode
         exclude("org.eclipse.jetty")
     }
