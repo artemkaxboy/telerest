@@ -1,0 +1,7 @@
+spring:
+  main:
+    banner-mode: off
+
+telegram:
+  bot_name: my_nice_bot
+  token: 611101574:AAOENCL0octECKojlCpoeYZ_DPOcgt3uILa
