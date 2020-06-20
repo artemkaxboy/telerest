@@ -4,8 +4,13 @@ plugins {
     id("org.springframework.boot") version "2.3.1.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     kotlin("jvm") version "1.3.72"
+    // kotlin("kapt") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
 }
+
+// val springfoxSwaggerVersion by extra("2.7.0")
+// val springfoxSpringWebflux by extra("pom")
+val kotlinLogging by extra("1.7.10")
 
 group = "com.artemkaxboy"
 version = "0.0.1-SNAPSHOT"
@@ -13,6 +18,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
+    jcenter()
     // telegram bot   https://github.com/elbekD/kt-telegram-bot
     maven("https://jitpack.io")
 }
@@ -29,6 +35,14 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+    // swagger
+    // implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
+    // implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
+    // implementation("io.springfox:springfox-spring-webflux:$springfoxSpringWebflux")
+
+    // logging
+    implementation("io.github.microutils:kotlin-logging:$kotlinLogging")
 
     // validation       https://www.baeldung.com/javax-validation
     implementation("javax.validation:validation-api")

@@ -32,6 +32,10 @@ class TelegramBot(
         return false
     }
 
+    fun sendMessage(chatId: Any, text: String): Int {
+        return bot.sendMessage(chatId, text).get().message_id
+    }
+
     private fun configureBot() {
         bot.onCommand(COMMAND_START, this::onStartCommand)
         bot.onCommand(COMMAND_ECHO, this::onEchoCommand)
