@@ -1,7 +1,7 @@
-package com.artemkaxboy.telerest.listeners
+package com.artemkaxboy.telerest.listener
 
-import com.artemkaxboy.telerest.services.TelegramBot
-import com.artemkaxboy.telerest.tools.Exiter
+import com.artemkaxboy.telerest.service.TelegramBot
+import com.artemkaxboy.telerest.tool.Exiter
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.springframework.boot.context.event.ApplicationReadyEvent

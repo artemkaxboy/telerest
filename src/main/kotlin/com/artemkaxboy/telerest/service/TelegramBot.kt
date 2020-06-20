@@ -1,6 +1,6 @@
-package com.artemkaxboy.telerest.services
+package com.artemkaxboy.telerest.service
 
-import com.artemkaxboy.telerest.tools.loggerFor
+import com.artemkaxboy.telerest.tool.loggerFor
 import com.elbekD.bot.Bot
 import com.elbekD.bot.types.Message
 import kotlinx.coroutines.delay

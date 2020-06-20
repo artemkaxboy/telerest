@@ -1,4 +1,4 @@
-package com.artemkaxboy.telerest.tools
+package com.artemkaxboy.telerest.tool
 
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
