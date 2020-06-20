@@ -14,6 +14,6 @@ class TelegramBotConfig (
 
     @Bean
     fun getTelegramBot(): TelegramBot {
-        return TelegramBot(telegramBotProperties.botName, telegramBotProperties.token)
+        return TelegramBot(telegramBotProperties.token)
     }
 }

@@ -8,12 +8,13 @@ import kotlinx.coroutines.delay
 private const val COMMAND_START = "/start"
 private const val COMMAND_ECHO = "/echo"
 
+private const val BOT_NAME = "bot_name"
+
 class TelegramBot(
-    private val botName: String,
     token: String
 ) {
 
-    private val bot = Bot.createPolling(botName, token)
+    private val bot = Bot.createPolling(BOT_NAME, token)
 
     /**
      * Starts the bot.
@@ -43,12 +44,12 @@ class TelegramBot(
 
     private fun startBot(): Boolean {
         return runCatching {
-            logger.info("Telegram Bot {$botName} starting...")
+            logger.info("Telegram bot starting...")
             bot.start()
-            logger.info("Telegram Bot {$botName} started successfully")
+            logger.info("Telegram bot started successfully")
             true
         }.getOrElse {
-            logger.error("Cannot start Telegram Bot {$botName}: ${it.message}")
+            logger.error("Cannot start Telegram bot: ${it.message}")
             false
         }
     }

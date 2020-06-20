@@ -8,9 +8,6 @@ import javax.validation.constraints.NotBlank
 @Validated
 class TelegramBotProperties {
 
-    @NotBlank(message = "Bot token must be provided")
+    @NotBlank(message = "TELEGRAM_TOKEN environment variable must be provided")
     lateinit var token: String
-
-    @NotBlank(message = "Bot username must be provided")
-    lateinit var botName: String
 }

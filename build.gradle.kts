@@ -5,6 +5,7 @@ plugins {
     kotlin("plugin.spring") version "1.3.72"
     id("org.springframework.boot") version "2.3.1.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("com.google.cloud.tools.jib") version "1.7.0"
 }
 
 val kotlinLoggingVersion by extra("1.7.10")
@@ -60,6 +61,24 @@ dependencies {
     }
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.security:spring-security-test")
+}
+
+// https://peterevans.dev/posts/containerising-kotlin-with-jib/
+jib {
+
+    container {
+        labels = mapOf("maintainer" to "Artem Kolin <artemkaxboy@gmail.com>")
+        environment = mapOf("VERSION" to "$version")
+        ports = listOf("8080")
+        args = listOf("--help")
+        volumes = listOf("/data")
+        user = "999"
+    }
+
+    to {
+        image = "artemkaxboy/telerest"
+        tags = setOf("$version")
+    }
 }
 
 tasks.withType<Test> {
