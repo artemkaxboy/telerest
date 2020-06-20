@@ -1,7 +1,12 @@
 package com.artemkaxboy.telerest.services
 
+import com.artemkaxboy.telerest.tools.loggerFor
 import com.elbekD.bot.Bot
-import org.slf4j.LoggerFactory
+import com.elbekD.bot.types.Message
+import kotlinx.coroutines.delay
+
+private const val COMMAND_START = "/start"
+private const val COMMAND_ECHO = "/echo"
 
 class TelegramBot(
     private val botName: String,
@@ -10,7 +15,29 @@ class TelegramBot(
 
     private val bot = Bot.createPolling(botName, token)
 
-    fun start(): Boolean {
+    /**
+     * Starts the bot.
+     *
+     * @return true if bot started correct, false - otherwise.
+     */
+    suspend fun start(): Boolean {
+        configureBot()
+
+        repeat(3) {
+            if (startBot()) {
+                return true
+            }
+            delay(1000)
+        }
+        return false
+    }
+
+    private fun configureBot() {
+        bot.onCommand(COMMAND_START, this::onStartCommand)
+        bot.onCommand(COMMAND_ECHO, this::onEchoCommand)
+    }
+
+    private fun startBot(): Boolean {
         return runCatching {
             logger.info("Telegram Bot {$botName} starting...")
             bot.start()
@@ -22,15 +49,23 @@ class TelegramBot(
         }
     }
 
-    // bot.onCommand("/start") { msg, _ ->
-    //     bot.sendMessage(msg.chat.id, "Hello World!")
-    // }
-    //
-    // bot.onCommand("/echo") { msg, opts ->
-    //     bot.sendMessage(msg.chat.id, "${msg.text} ${opts ?: ""}")
-    // }
+    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER") // signature is fixed to use in Bot.onCommand
+    private suspend fun onStartCommand(message: Message, opts: String?) {
+        val name = message.from?.first_name
+            ?: message.from?.username
+            ?: "guest"
+        bot.sendMessage(message.chat.id, "Hello, $name!")
+    }
+
+    @Suppress("RedundantSuspendModifier") // signature is fixed to use in Bot.onCommand
+    private suspend fun onEchoCommand(message: Message, opts: String?) {
+        val reply = message.text?.removePrefix(COMMAND_ECHO)?.trim()?.takeUnless { it.isEmpty() }
+            ?: opts
+            ?: "---"
+        bot.sendMessage(message.chat.id, reply)
+    }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(this::class.java.declaringClass)
+        private val logger = loggerFor(this::class.java)
     }
 }

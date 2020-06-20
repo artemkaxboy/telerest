@@ -12,7 +12,7 @@ class TelegramBotConfiguration (
 ) {
 
     @Bean
-    fun telegramBot(): TelegramBot {
+    fun getTelegramBot(): TelegramBot {
         return TelegramBot(telegramBotProperties.botName, telegramBotProperties.token)
     }
 }
