@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.artemkaxboy"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 val kotlinLoggingVersion by extra("1.7.10")
