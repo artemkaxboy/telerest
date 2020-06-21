@@ -73,16 +73,14 @@ jib {
 
     container {
         labels = mapOf("maintainer" to "Artem Kolin <artemkaxboy@gmail.com>")
-        environment = mapOf("APPLICATION_VERSION" to "$version")
+        environment = mapOf("APPLICATION_VERSION" to "${project.version}")
         ports = listOf("8080")
-        args = listOf("--help")  // example
         volumes = listOf("/config", "/application.properties", "/application.yml")
         user = "999"
     }
 
     to {
-        image = "artemkaxboy/telerest"
-        tags = setOf("$version")
+        image = "artemkaxboy/telerest:${project.version}"
     }
 }
 
