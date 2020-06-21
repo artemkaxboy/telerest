@@ -81,7 +81,7 @@ jib {
     }
 
     to {
-        image = "artemkaxboy/telerest:${project.version}"
+        image = "artemkaxboy/${rootProject.name}:${project.version}"
     }
 }
 

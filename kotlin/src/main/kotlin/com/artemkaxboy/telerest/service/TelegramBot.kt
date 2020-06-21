@@ -7,6 +7,7 @@ import com.elbekD.bot.types.Message
 import com.elbekD.bot.types.Update
 import kotlinx.coroutines.delay
 import mu.KotlinLogging
+import java.security.AccessControlException
 import java.time.Duration
 
 // must be added to bot commands with @BotFather's help https://stackoverflow.com/a/34458436/1452052
@@ -17,6 +18,7 @@ private const val DUMMY_BOT_NAME = "bot_name"
 
 class TelegramBot(
     token: String,
+    val password: String? = null,
     val defaultChatId: String? = null,
     val reconnectionCount: Int = DEFAULT_RECONNECTION_COUNT,
     val reconnectionDelay: Duration = Duration.ofSeconds(DEFAULT_RECONNECTION_DELAY_SECONDS)
@@ -41,7 +43,11 @@ class TelegramBot(
         return false
     }
 
-    fun sendMessage(text: String, chatId: String? = null): Message {
+    fun sendMessage(text: String, password: String? = null, chatId: String? = null): Message {
+        if (compareValues(this.password, password) != 0) {
+            throw AccessControlException("Wrong password")
+        }
+
         val sendTo =
             chatId ?: defaultChatId ?: throw IllegalArgumentException("Neither chat id nor default chat id provided")
 

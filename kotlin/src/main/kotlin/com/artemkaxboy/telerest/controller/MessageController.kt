@@ -6,7 +6,6 @@ import com.artemkaxboy.telerest.service.TelegramBot
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
-import mu.KotlinLogging
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -21,9 +20,9 @@ const val API_VERSION = "v1"
 @RestController
 @RequestMapping(value = ["api/$API_VERSION"])
 @Api(tags = ["Message controller"], description = "Perform messages operation")
-class MessageController (
+class MessageController(
     val telegramBot: TelegramBot
-){
+) {
 
     @ApiOperation(value = "Post message", response = ResponseDto::class)
     @PostMapping("/message")
@@ -38,11 +37,9 @@ class MessageController (
         // Mono comes to API, it will be fixed: https://github.com/springfox/springfox/issues/2858
 
         return ResponseDto
-            .getResponse(request) { telegramBot.sendMessage(message.text, message.chatId) }
+            .getResponse(request) {
+                telegramBot.sendMessage(message.text, password = message.password, chatId = message.chatId)
+            }
             .toMono()
-    }
-
-    companion object {
-        private val logger = KotlinLogging.logger { }
     }
 }

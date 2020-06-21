@@ -17,12 +17,15 @@ const val DEFAULT_RECONNECTION_DELAY_SECONDS = 3L
 @Validated
 class TelegramBotProperties {
 
-    /** Telegram bot token */
+    /** Telegram bot API-token */
     @NotBlank(message = "Telegram token must be provided. Use config files or env variables.")
     lateinit var token: String
 
     /** Default chat ID. You can send messages without implicitly set chat id if it set. */
     var defaultChatId: String? = null
+
+    /** Password to send messages. Each message must contain password field if it is set. */
+    var password: String? = null
 
     val reconnection = Reconnection()
 

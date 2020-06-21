@@ -3,6 +3,12 @@ spring:
     banner-mode: off
 
 #telegram:
-#  reconnection:
-#    count: 10
-#    delay: 10s
+
+#  Password to send messages. Each message must contain password field if it is set.
+#  password: password
+
+#  Telegram bot API-token
+#  token: 612543674:AAGWTokenTokenTokenRYEYZ_DRTokenPRa
+
+#  Default chat ID. You can send messages without implicitly set chat id if it set.
+#  default-chat-id: 312555658

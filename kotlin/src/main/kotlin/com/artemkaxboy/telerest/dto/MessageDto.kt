@@ -12,6 +12,13 @@ data class MessageDto(
     )
     val chatId: String? = null,
 
+    @Suppress("SpellCheckingInspection") // password may content anything
+    @ApiModelProperty(
+        value = "Password to send message. Required if app started with password protection.",
+        example = "uhfewuia67t34t78hagre8h9"
+    )
+    val password: String? = null,
+
     @ApiModelProperty(
         value = "Message text to send.",
         required = true,
