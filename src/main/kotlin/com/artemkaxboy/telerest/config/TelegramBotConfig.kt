@@ -16,7 +16,9 @@ class TelegramBotConfig(
     fun getTelegramBot(): TelegramBot {
         return TelegramBot(
             telegramBotProperties.token,
-            defaultChatId = telegramBotProperties.defaultChatId
+            defaultChatId = telegramBotProperties.defaultChatId,
+            reconnectionCount = telegramBotProperties.reconnection.count,
+            reconnectionDelay = telegramBotProperties.reconnection.delay
         )
     }
 }

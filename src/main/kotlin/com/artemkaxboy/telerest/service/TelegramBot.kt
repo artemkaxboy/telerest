@@ -1,21 +1,28 @@
 package com.artemkaxboy.telerest.service
 
+import com.artemkaxboy.telerest.config.properties.DEFAULT_RECONNECTION_COUNT
+import com.artemkaxboy.telerest.config.properties.DEFAULT_RECONNECTION_DELAY_SECONDS
 import com.elbekD.bot.Bot
 import com.elbekD.bot.types.Message
+import com.elbekD.bot.types.Update
 import kotlinx.coroutines.delay
 import mu.KotlinLogging
+import java.time.Duration
 
-private const val COMMAND_START = "/start"
-private const val COMMAND_ECHO = "/echo"
+// must be added to bot commands with @BotFather's help https://stackoverflow.com/a/34458436/1452052
+private const val COMMAND_CHAT_ID = "/chatid"
 
-private const val BOT_NAME = "bot_name"
+/** Doesn't make any sense but required by the library */
+private const val DUMMY_BOT_NAME = "bot_name"
 
 class TelegramBot(
     token: String,
-    val defaultChatId: String? = null
+    val defaultChatId: String? = null,
+    val reconnectionCount: Int = DEFAULT_RECONNECTION_COUNT,
+    val reconnectionDelay: Duration = Duration.ofSeconds(DEFAULT_RECONNECTION_DELAY_SECONDS)
 ) {
 
-    private val bot = Bot.createPolling(BOT_NAME, token)
+    private val bot = Bot.createPolling(DUMMY_BOT_NAME, token)
 
     /**
      * Starts the bot.
@@ -25,11 +32,11 @@ class TelegramBot(
     suspend fun start(): Boolean {
         configureBot()
 
-        repeat(3) {
+        repeat(reconnectionCount) {
             if (startBot()) {
                 return true
             }
-            delay(1000)
+            delay(reconnectionDelay.toMillis())
         }
         return false
     }
@@ -42,8 +49,8 @@ class TelegramBot(
     }
 
     private fun configureBot() {
-        bot.onCommand(COMMAND_START, this::onStartCommand)
-        bot.onCommand(COMMAND_ECHO, this::onEchoCommand)
+        bot.onCommand(COMMAND_CHAT_ID, this::onChatId)
+        bot.onAnyUpdate(this::onAnyUpdate)
     }
 
     private fun startBot(): Boolean {
@@ -59,19 +66,13 @@ class TelegramBot(
     }
 
     @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER") // signature is fixed to use in Bot.onCommand
-    private suspend fun onStartCommand(message: Message, opts: String?) {
-        val name = message.from?.first_name
-            ?: message.from?.username
-            ?: "guest"
-        bot.sendMessage(message.chat.id, "Hello, $name!")
+    private suspend fun onChatId(message: Message, opts: String?) {
+        bot.sendMessage(message.chat.id, "ChatID: ${message.chat.id}")
     }
 
     @Suppress("RedundantSuspendModifier") // signature is fixed to use in Bot.onCommand
-    private suspend fun onEchoCommand(message: Message, opts: String?) {
-        val reply = message.text?.removePrefix(COMMAND_ECHO)?.trim()?.takeUnless { it.isEmpty() }
-            ?: opts
-            ?: "---"
-        bot.sendMessage(message.chat.id, reply)
+    private suspend fun onAnyUpdate(update: Update) {
+        logger.info { update }
     }
 
     companion object {
