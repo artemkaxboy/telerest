@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty
 import org.springframework.http.server.reactive.ServerHttpRequest
 import kotlin.random.Random
 
+// based on https://google.github.io/styleguide/jsoncstyleguide.xml
 @ApiModel(value = "Response", description = "Object contains request information, operation result or occurred errors.")
 data class ResponseDto(
 

@@ -1,5 +1,6 @@
 package com.artemkaxboy.telerest.tool
 
+import mu.KotlinLogging
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.context.ConfigurableApplicationContext
@@ -12,7 +13,7 @@ class Exiter : ApplicationContextAware {
     lateinit var context: ConfigurableApplicationContext
 
     fun error(message: String, status: Int = 1) {
-        logger.error(message)
+        logger.error { message }
         exit(status)
     }
 
@@ -26,6 +27,6 @@ class Exiter : ApplicationContextAware {
     }
 
     companion object {
-        private val logger = loggerFor(this::class.java)
+        private val logger = KotlinLogging.logger { }
     }
 }

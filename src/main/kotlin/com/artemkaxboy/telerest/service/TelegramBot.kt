@@ -1,9 +1,9 @@
 package com.artemkaxboy.telerest.service
 
-import com.artemkaxboy.telerest.tool.loggerFor
 import com.elbekD.bot.Bot
 import com.elbekD.bot.types.Message
 import kotlinx.coroutines.delay
+import mu.KotlinLogging
 
 private const val COMMAND_START = "/start"
 private const val COMMAND_ECHO = "/echo"
@@ -48,12 +48,12 @@ class TelegramBot(
 
     private fun startBot(): Boolean {
         return runCatching {
-            logger.info("Telegram bot starting...")
+            logger.info { "Telegram bot starting..." }
             bot.start()
-            logger.info("Telegram bot started successfully")
+            logger.info { "Telegram bot started successfully" }
             true
         }.getOrElse {
-            logger.error("Cannot start Telegram bot: ${it.message}")
+            logger.error { "Cannot start Telegram bot: ${it.message}" }
             false
         }
     }
@@ -75,6 +75,6 @@ class TelegramBot(
     }
 
     companion object {
-        private val logger = loggerFor(this::class.java)
+        private val logger = KotlinLogging.logger { }
     }
 }
