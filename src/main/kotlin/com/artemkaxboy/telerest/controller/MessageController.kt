@@ -1,11 +1,12 @@
 package com.artemkaxboy.telerest.controller
 
 import com.artemkaxboy.telerest.dto.MessageDto
+import com.artemkaxboy.telerest.dto.ResponseDto
 import com.artemkaxboy.telerest.service.TelegramBot
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import mu.KotlinLogging
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,9 +20,6 @@ const val API_VERSION = "v1"
 @RestController
 @RequestMapping(value = ["api/$API_VERSION"])
 class MessageController (
-    @Value("\${chat_id}")
-    val chatId: Long,
-
     val telegramBot: TelegramBot
 ){
 
@@ -31,11 +29,13 @@ class MessageController (
 
         @ApiParam(value = "Message data")
         @RequestBody(required = true)
-        message: MessageDto
-    ): Mono<Int> {
+        message: MessageDto,
 
-        return telegramBot.sendMessage(chatId, message.text)
-            .also { logger.trace { "Message {$it} sent" } }
+        request: ServerHttpRequest
+    ): Mono<ResponseDto> {
+
+        return ResponseDto
+            .getResponse(request) { telegramBot.sendMessage(message.text, message.chatId) }
             .toMono()
     }
 

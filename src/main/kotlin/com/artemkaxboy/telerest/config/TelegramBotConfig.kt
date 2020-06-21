@@ -8,12 +8,15 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties(TelegramBotProperties::class)
-class TelegramBotConfig (
+class TelegramBotConfig(
     val telegramBotProperties: TelegramBotProperties
 ) {
 
     @Bean
     fun getTelegramBot(): TelegramBot {
-        return TelegramBot(telegramBotProperties.token)
+        return TelegramBot(
+            telegramBotProperties.token,
+            defaultChatId = telegramBotProperties.defaultChatId
+        )
     }
 }

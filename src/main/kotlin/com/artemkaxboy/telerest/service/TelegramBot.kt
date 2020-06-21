@@ -11,7 +11,8 @@ private const val COMMAND_ECHO = "/echo"
 private const val BOT_NAME = "bot_name"
 
 class TelegramBot(
-    token: String
+    token: String,
+    val defaultChatId: String? = null
 ) {
 
     private val bot = Bot.createPolling(BOT_NAME, token)
@@ -33,8 +34,11 @@ class TelegramBot(
         return false
     }
 
-    fun sendMessage(chatId: Any, text: String): Int {
-        return bot.sendMessage(chatId, text).get().message_id
+    fun sendMessage(text: String, chatId: String? = null): Message {
+        val sendTo =
+            chatId ?: defaultChatId ?: throw IllegalArgumentException("Neither chat id nor default chat id provided")
+
+        return bot.sendMessage(sendTo, text).get()
     }
 
     private fun configureBot() {

@@ -68,10 +68,10 @@ jib {
 
     container {
         labels = mapOf("maintainer" to "Artem Kolin <artemkaxboy@gmail.com>")
-        environment = mapOf("VERSION" to "$version")
+        environment = mapOf("APPLICATION_VERSION" to "$version")
         ports = listOf("8080")
-        args = listOf("--help")
-        volumes = listOf("/data")
+        args = listOf("--help")  // example
+        volumes = listOf("/config", "/application.properties", "/application.yml")
         user = "999"
     }
 

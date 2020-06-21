@@ -8,11 +8,9 @@ data class MessageDto(
 
     @ApiModelProperty(
         value = "Target chat id.",
-        required = true,
-        allowEmptyValue = false,
         example = "30811102"
     )
-    val chatId: Long,
+    val chatId: String? = null,
 
     @ApiModelProperty(
         value = "Message text to send.",
