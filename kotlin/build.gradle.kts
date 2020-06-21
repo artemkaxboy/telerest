@@ -9,13 +9,14 @@ plugins {
     id("com.google.cloud.tools.jib") version "1.7.0"
 }
 
-val kotlinLoggingVersion by extra("1.7.10")
-val ktTelegramBotVersion by extra("1.3.0-beta")
-val springfoxSwaggerVersion by extra("3.0.0-SNAPSHOT")
-
 group = "com.artemkaxboy"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
+
+val kotlinLoggingVersion by extra("1.7.10")
+val ktTelegramBotVersion by extra("1.3.0-beta")
+val springfoxSwaggerVersion by extra("3.0.0-SNAPSHOT")
+val tag by extra(System.getenv("TAG") ?: project.version)
 
 repositories {
     mavenCentral()
@@ -81,7 +82,7 @@ jib {
     }
 
     to {
-        image = "artemkaxboy/${rootProject.name}:${project.version}"
+        image = "artemkaxboy/${rootProject.name}:${tag}"
     }
 }
 
