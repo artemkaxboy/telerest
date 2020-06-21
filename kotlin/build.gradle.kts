@@ -77,6 +77,7 @@ jib {
         ports = listOf("8080")
         volumes = listOf("/config", "/application.properties", "/application.yml")
         user = "999"
+        creationTime = "USE_CURRENT_TIMESTAMP"
     }
 
     to {
