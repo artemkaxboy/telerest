@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty
 import org.springframework.http.server.reactive.ServerHttpRequest
 import kotlin.random.Random
 
-@ApiModel(value = "Message", description = "Basic message to send to telegram chat.")
+@ApiModel(value = "Response", description = "Object contains request information, operation result or occurred errors.")
 data class ResponseDto(
 
     @ApiModelProperty(
@@ -17,15 +17,15 @@ data class ResponseDto(
     val apiVersion: String = CURRENT_API_VERSION,
 
     @ApiModelProperty(
-        value = "Request ID.",
-        example = "todo",
+        value = "Unique request ID.",
+        example = "33a2eec1-2",
         required = false
     )
     val id: String? = null,
 
     @ApiModelProperty(
         value = "Requested method.",
-        example = "todo",
+        example = "/api/v1/message",
         required = false
     )
     val method: String? = null,

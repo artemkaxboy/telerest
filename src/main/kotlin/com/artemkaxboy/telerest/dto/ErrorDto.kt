@@ -15,14 +15,13 @@ data class ErrorDto(
 
     @ApiModelProperty(
         value = "Error message.",
-        example = "API error.",
+        example = "API error",
         required = false
     )
     val message: String? = null,
 
     @ApiModelProperty(
-        value = "Requested method.",
-        example = "todo",
+        value = "List of occurred errors.",
         required = false
     )
     val errors: List<ErrorDetailDto>? = null

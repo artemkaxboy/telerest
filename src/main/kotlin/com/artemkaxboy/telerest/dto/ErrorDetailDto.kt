@@ -14,31 +14,31 @@ data class ErrorDetailDto(
 
     @ApiModelProperty(
         value = "Error reason.",
-        example = "TODO! Cannot resolve DNS name."
+        example = "Cannot resolve DNS name"
     )
     val reason: String? = null,
 
     @ApiModelProperty(
         value = "Error message.",
-        example = "todo"
+        example = "Null pointer exception"
     )
     val message: String? = null,
 
     @ApiModelProperty(
         value = "Error location.",
-        example = "todo"
+        example = "35"
     )
     val location: String? = null,
 
     @ApiModelProperty(
         value = "Error location type.",
-        example = "todo"
+        example = "symbol"
     )
     val locationType: String? = null,
 
     @ApiModelProperty(
         value = "Extended help message.",
-        example = "todo! what should i do??"
+        example = "Set some property value. Documentation: https://tools.ietf.org/html/rfc3261"
     )
     val extendedHelp: String? = null
 ) {

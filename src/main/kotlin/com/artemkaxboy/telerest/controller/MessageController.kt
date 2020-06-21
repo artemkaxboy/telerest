@@ -3,6 +3,7 @@ package com.artemkaxboy.telerest.controller
 import com.artemkaxboy.telerest.dto.MessageDto
 import com.artemkaxboy.telerest.dto.ResponseDto
 import com.artemkaxboy.telerest.service.TelegramBot
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam
 import mu.KotlinLogging
@@ -19,11 +20,12 @@ const val API_VERSION = "v1"
 // https://www.baeldung.com/spring-webflux
 @RestController
 @RequestMapping(value = ["api/$API_VERSION"])
+@Api(tags = ["Message controller"], description = "Perform messages operation")
 class MessageController (
     val telegramBot: TelegramBot
 ){
 
-    @ApiOperation(value = "Post message", response = Int::class)
+    @ApiOperation(value = "Post message", response = ResponseDto::class)
     @PostMapping("/message")
     private fun postMessage(
 
@@ -33,6 +35,7 @@ class MessageController (
 
         request: ServerHttpRequest
     ): Mono<ResponseDto> {
+        // Mono comes to API, it will be fixed: https://github.com/springfox/springfox/issues/2858
 
         return ResponseDto
             .getResponse(request) { telegramBot.sendMessage(message.text, message.chatId) }
