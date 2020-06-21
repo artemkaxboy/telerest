@@ -10,6 +10,8 @@ import mu.KotlinLogging
 import java.security.AccessControlException
 import java.time.Duration
 
+private const val COMMAND_START = "/start"
+
 // must be added to bot commands with @BotFather's help https://stackoverflow.com/a/34458436/1452052
 private const val COMMAND_CHAT_ID = "/chatid"
 
@@ -56,6 +58,7 @@ class TelegramBot(
 
     private fun configureBot() {
         bot.onCommand(COMMAND_CHAT_ID, this::onChatId)
+        bot.onCommand(COMMAND_START, this::onChatId)
         bot.onAnyUpdate(this::onAnyUpdate)
     }
 
