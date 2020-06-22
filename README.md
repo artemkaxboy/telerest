@@ -21,8 +21,8 @@ That's all. You pass your token and allow the container to use tcp port on your 
 You have to start conversation with the bot or add it to a group, or it won't be able to send you any message.
 
 ### Getting chat ID
-Send it `/start` or `/chatid` command, and you give current chat ID. This is the mandatory property to send a message
-unless you set `TELEGRAM_DEFAULT_CHAT_ID` variable.
+Send to it `/start` or `/chatid` command, and you get current chat ID. This is the mandatory property to send a message
+unless you set `TELEGRAM_DEFAULT-CHAT-ID` variable.
 
 ### Send message
 To send a message you have to perform POST request:
